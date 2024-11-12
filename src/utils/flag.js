@@ -2,10 +2,10 @@ import Rox from "rox-browser";
 import { betaAccess, isLoggedIn, getCompany } from "./users";
 
 export const configurationFetchedHandler = (fetcherResults) => {
-  // console.log(fetcherResults)
-  // if (fetcherResults.hasChanges && fetcherResults.fetcherStatus === 'APPLIED_FROM_NETWORK') {
-  //   window.location.reload(false)
-  // }
+  console.log(fetcherResults)
+  if (fetcherResults.hasChanges && fetcherResults.fetcherStatus === 'APPLIED_FROM_NETWORK') {
+    window.location.reload(false)
+  }
 };
 
 export const impressionHandler = (reporting) => {
