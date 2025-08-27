@@ -2,6 +2,10 @@ name: test-and-build-image
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,17 +19,8 @@ jobs:
       - run: npm ci
       - run: npm run test:unit
 
-      - name: Record test results to Launchable workspace
-        uses: launchableinc/record-build-and-test-results-action@v1.0.0
+      - name: Publish GHA run test results to CloudBees Unify
+        uses: cloudbees-io-gha/publish-test-results@v2
         with:
-          report_path: junit.xml
-          test_runner: jest
-        if: always()
-        env:
-          LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit.xml
-          path: junit.xml
+          test-type: junit
+          results-path: junit.xml
